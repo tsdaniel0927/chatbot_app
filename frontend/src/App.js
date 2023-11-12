@@ -1,25 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import MessageList from './compoents/MessageList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+  const messages = [
+    { sender: 'user', text: 'Hello, how can I help you?', timestamp: '10:00 AM' },
+    { sender: 'bot', text: 'I need assistance with my account.', timestamp: '10:01 AM' },
+    // ... more messages
+  ];
+
+  return <MessageList messages={messages} />;
+};
 
 export default App;
