@@ -1,14 +1,37 @@
-import React from 'react';
-import MessageList from './compoents/MessageList';
+import React, { useState } from 'react';
+import ChatHistory from './compoents/ChatHistory';
+import TextInput from './compoents/TextInput';
+import './App.css';
 
-const App = () => {
-  const messages = [
-    { sender: 'user', text: 'Hello, how can I help you?', timestamp: '10:00 AM' },
-    { sender: 'bot', text: 'I need assistance with my account.', timestamp: '10:01 AM' },
-    // ... more messages
-  ];
+export default function App(){
+  const [message, setMessage] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
+  const [isComposing, setIsComposing] = useState(false);
 
-  return <MessageList messages={messages} />;
-};
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      setChatHistory([...chatHistory, { text: message, sender: 'user' }]);
+      setMessage('');
+    }
+  };
 
-export default App;
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !isComposing){
+      handleSendMessage();
+    }
+  };
+
+  return (
+    <div>
+      <ChatHistory chatHistory={chatHistory} />
+      <TextInput 
+        message={message}
+        setMessage={setMessage}
+        handleSendMessage={handleSendMessage}
+        handleCompositionStart={() => setIsComposing(true)}
+        handleCompositionEnd={() => setIsComposing(false)}
+        handleKeyDown={handleKeyDown}
+      />
+    </div>
+  );
+}
